@@ -1,7 +1,4 @@
-//Carol Álvarez
-//Jose Antonio Reyes
-//Ignacio Tapia
-//Alicia Touris
+
 
 using Assets.Scripts.DataStructures;
 using System.Collections.Generic;
@@ -19,10 +16,10 @@ namespace Assets.Scripts.SampleMind
 
         int openNodesInMove = 0; //Controlador de los nodos abiertos en cada iteraccion del bucle
 
-        double totaltime = 0f;  //controladores para calcular el tiempo medio de ejecucción
+        double totaltime = 0f;  //controladores para calcular el tiempo medio de ejecucciÃ³n
         int numTime = 0;
 
-        //Método para obtener el movimiento
+        //MÃ©todo para obtener el movimiento
         public override Locomotion.MoveDirection GetNextMove(BoardInfo boardInfo, CellInfo currentPos, CellInfo[] goals)
         {
             enemyBehaviourArray = boardInfo.Enemies;
@@ -32,23 +29,23 @@ namespace Assets.Scripts.SampleMind
             if (enemyBehaviourArray.Count <= 0)
             {
                 numTime++;
-                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecución más adelante
+                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecuciÃ³n mÃ¡s adelante
 
-                searchSubGoal(boardInfo, currentPos, goals[0]);//Llamar a la función que establece el recorrido a seguir
-                UnityEngine.Debug.Log($"LONGITUD DEL PATH: {path.Count}");//Llamamos a la función que nos da la distandia de Manhattan
+                searchSubGoal(boardInfo, currentPos, goals[0]);//Llamar a la funciÃ³n que establece el recorrido a seguir
+                UnityEngine.Debug.Log($"LONGITUD DEL PATH: {path.Count}");//Llamamos a la funciÃ³n que nos da la distandia de Manhattan
                 UnityEngine.Debug.Log($"TIME ELAPSED: {sw.Elapsed}");// Imprimir el tiempo transcurrido
-                UnityEngine.Debug.Log($"NUMERO DE NODOS2: {openNodesInMove}");// Imprimir el número de nodos dentro del path a seguir
+                UnityEngine.Debug.Log($"NUMERO DE NODOS2: {openNodesInMove}");// Imprimir el nÃºmero de nodos dentro del path a seguir
 
             }
             else
             {
                 numTime++;
-                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecución más adelante
+                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecuciÃ³n mÃ¡s adelante
 
-                searchSubGoal(boardInfo, currentPos, enemyBehaviourArray[0].CurrentPosition());//Llamar a la función que establece el recorrido a seguir
-                UnityEngine.Debug.Log($"LONGITUD DEL PATH: {path.Count}");//Llamamos a la función que nos da la distandia de Manhattan
+                searchSubGoal(boardInfo, currentPos, enemyBehaviourArray[0].CurrentPosition());//Llamar a la funciÃ³n que establece el recorrido a seguir
+                UnityEngine.Debug.Log($"LONGITUD DEL PATH: {path.Count}");//Llamamos a la funciÃ³n que nos da la distandia de Manhattan
                 UnityEngine.Debug.Log($"TIME ELAPSED: {sw.Elapsed}");// Imprimir el tiempo transcurrido               
-                UnityEngine.Debug.Log($"NUMERO DE NODOS1: {openNodesInMove}");// Imprimir el número de nodos dentro del path a seguir
+                UnityEngine.Debug.Log($"NUMERO DE NODOS1: {openNodesInMove}");// Imprimir el nÃºmero de nodos dentro del path a seguir
 
             }
 
@@ -72,16 +69,16 @@ namespace Assets.Scripts.SampleMind
             return Locomotion.MoveDirection.None;// Si no hay movimientos disponibles, no se devuelve movimiento
         }
 
-        // Método para realizar la búsqueda del camino utilizando el algoritmo SubGoal
+        // MÃ©todo para realizar la bÃºsqueda del camino utilizando el algoritmo SubGoal
         void searchSubGoal(BoardInfo boardInfo, CellInfo startPos, CellInfo targetPos)
         {
             openNodesInMove = 0;
-            openList.Clear(); // Limpiar la cola "abierta" para reempezar la búsqueda
+            openList.Clear(); // Limpiar la cola "abierta" para reempezar la bÃºsqueda
             visited.Clear(); // Limpiar el diccionario de predecesores
 
             openList.Add(startPos); // Se inicializa la cola "abierta" desde el nodo de inicio
 
-            // Bucle principal del algoritmo SubGoal si la lista de abiertos no está vacía
+            // Bucle principal del algoritmo SubGoal si la lista de abiertos no estÃ¡ vacÃ­a
             while (openList.Count > 0)
             {
                 CellInfo current = openList[0]; // Obtener el primer nodo de la cola 'openList' para marcarlo como el nodo actual
@@ -91,12 +88,12 @@ namespace Assets.Scripts.SampleMind
                 {
                      if (next != null && !visited.ContainsKey(next)) // Si el nodo vecino no ha sido visitado
                     {
-                        openList.Add(next); // Añadir el nodo vecino a la cola 'openList' que funciona como la lista "abierta"
+                        openList.Add(next); // AÃ±adir el nodo vecino a la cola 'openList' que funciona como la lista "abierta"
                         openNodesInMove++;
                         visited[next] = current; // Almacenar el predecesor del nodo vecino
                         if(next == targetPos) //Si el nodo vecino es el objetivo
                         {
-                            retracePath(startPos, next); // Llamar a la función que reconstruye el camino desde la posición inicial hasta el nodo meta
+                            retracePath(startPos, next); // Llamar a la funciÃ³n que reconstruye el camino desde la posiciÃ³n inicial hasta el nodo meta
                             return; // Salir del bucle
                         }
                     }
@@ -105,16 +102,16 @@ namespace Assets.Scripts.SampleMind
             }
         }
 
-        // Método para reconstruir el camino desde la posición inicial hasta el nodo meta
+        // MÃ©todo para reconstruir el camino desde la posiciÃ³n inicial hasta el nodo meta
         void retracePath(CellInfo startNode, CellInfo endNode)
         {
             path.Clear();
             CellInfo currentNode = endNode; // Comenzar desde el nodo meta
 
-            // Bucle para retroceder desde el nodo meta hasta la posición inicial
+            // Bucle para retroceder desde el nodo meta hasta la posiciÃ³n inicial
             while (currentNode != startNode)
             {
-                path.Push(currentNode); // Añadir el nodo actual a la pila 'path'
+                path.Push(currentNode); // AÃ±adir el nodo actual a la pila 'path'
                 currentNode = visited[currentNode]; // Obtener el predecesor del nodo actual en el camino
             }
         }
