@@ -1,7 +1,3 @@
-//Carol Álvarez
-//Jose Antonio Reyes
-//Ignacio Tapia
-//Alicia Touris
 
 using Assets.Scripts.DataStructures;
 using System.Collections.Generic;
@@ -25,10 +21,10 @@ namespace Assets.Scripts.SampleMind
 
         int openNodesInMove = 0; //Controlador de los nodos abiertos en cada iteraccion del bucle
 
-        double totaltime = 0f;  //controladores para calcular el tiempo medio de ejecucción
+        double totaltime = 0f;  //controladores para calcular el tiempo medio de ejecucciÃ³n
         int numTime = 0;
 
-        //Método para obtener el movimiento
+        //MÃ©todo para obtener el movimiento
         public override Locomotion.MoveDirection GetNextMove(BoardInfo boardInfo, CellInfo currentPos, CellInfo[] goals)
         {
             enemyBehaviourArray = boardInfo.Enemies;
@@ -38,27 +34,27 @@ namespace Assets.Scripts.SampleMind
             if (enemyBehaviourArray.Count <= 0)
             {
                 numTime++;
-                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecución más adelante
+                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecuciÃ³n mÃ¡s adelante
 
-                searchPathHorizon(boardInfo, currentPos, goals[0]);//Llamar a la función que establece el recorrido a seguir
+                searchPathHorizon(boardInfo, currentPos, goals[0]);//Llamar a la funciÃ³n que establece el recorrido a seguir
 
                 UnityEngine.Debug.Log($"LONGITUD DEL PATH: {path.Count}");//Miramos la distancia en funcion de las casillas hasta neustro objetivo
                 UnityEngine.Debug.Log($"TIME ELAPSED: {sw.Elapsed}");// Imprimir el tiempo transcurrido
                 totaltime += sw.ElapsedMilliseconds;
-                UnityEngine.Debug.Log($"NUMERO DE NODOS2: {openNodesInMove}");// Imprimir el número de nodos dentro del path a seguir
+                UnityEngine.Debug.Log($"NUMERO DE NODOS2: {openNodesInMove}");// Imprimir el nÃºmero de nodos dentro del path a seguir
 
             }
             else
             {
                 numTime++;
-                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecución más adelante
+                sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecuciÃ³n mÃ¡s adelante
 
-                searchPathHorizon(boardInfo, currentPos, enemyBehaviourArray[0].CurrentPosition());//Llamar a la función que establece el recorrido a seguir
+                searchPathHorizon(boardInfo, currentPos, enemyBehaviourArray[0].CurrentPosition());//Llamar a la funciÃ³n que establece el recorrido a seguir
 
                 UnityEngine.Debug.Log($"LONGITUD DEL PATH: {path.Count}");//Miramos la distancia en funcion de las casillas hasta neustro objetivo
                 UnityEngine.Debug.Log($"TIME ELAPSED: {sw.Elapsed}");// Imprimir el tiempo transcurrido
                 totaltime += sw.ElapsedMilliseconds;
-                UnityEngine.Debug.Log($"NUMERO DE NODOS1: {openNodesInMove}");// Imprimir el número de nodos dentro del path a seguir
+                UnityEngine.Debug.Log($"NUMERO DE NODOS1: {openNodesInMove}");// Imprimir el nÃºmero de nodos dentro del path a seguir
 
             }            
             
@@ -81,10 +77,10 @@ namespace Assets.Scripts.SampleMind
             return Locomotion.MoveDirection.None;// Si no hay movimientos disponibles, no se devuelve movimiento
         }
 
-        // Método para realizar la búsqueda del camino utilizando el algoritmo Horizon
+        // MÃ©todo para realizar la bÃºsqueda del camino utilizando el algoritmo Horizon
         void searchPathHorizon(BoardInfo boardInfo, CellInfo startPos, CellInfo targetPos)
         {
-            openList.Clear(); // Limpiar la cola "abierta" para reempezar la búsqueda
+            openList.Clear(); // Limpiar la cola "abierta" para reempezar la bÃºsqueda
             visited.Clear(); // Limpiar el diccionario de predecesores
             deepList.Clear(); // Limpiar la lista de profundidad
 
@@ -96,7 +92,7 @@ namespace Assets.Scripts.SampleMind
 
             openNodesInMove = 0;
 
-            // Bucle principal del algoritmo Horizon si la lista de abiertos no está vacía
+            // Bucle principal del algoritmo Horizon si la lista de abiertos no estÃ¡ vacÃ­a
 
             while (openList.Count > 0 && deepList[0] != k)
             {
@@ -109,14 +105,14 @@ namespace Assets.Scripts.SampleMind
                     {
                         if (deepList[0] < k) // Si la profundidad sigue siendo menor que k
                         {
-                            openList.Add(next); // Añadir el nodo vecino a la cola 'openList' que funciona como la lista "abierta"
+                            openList.Add(next); // AÃ±adir el nodo vecino a la cola 'openList' que funciona como la lista "abierta"
                             visited[next] = current; // Almacenar el predecesor del nodo vecino
                             deepList.Add(deepList[0] + 1); //Sumamos uno en cada nueva generacion
                             openNodesInMove++;
                             
                             if (next == targetPos) // Si se ha encontrado el nodo meta
                             {
-                                retracePath(startPos, next); // Llamar a la función que reconstruye el camino desde la posición inicial hasta el nodo meta
+                                retracePath(startPos, next); // Llamar a la funciÃ³n que reconstruye el camino desde la posiciÃ³n inicial hasta el nodo meta
                                 return; // Salir del bucle                   
                             }
                         }
@@ -136,25 +132,25 @@ namespace Assets.Scripts.SampleMind
                     shortestNode = current;
                 }
             }
-            retracePath(startPos, shortestNode); // Llamar a la función que reconstruye el camino desde la posición inicial hasta el nodo meta
+            retracePath(startPos, shortestNode); // Llamar a la funciÃ³n que reconstruye el camino desde la posiciÃ³n inicial hasta el nodo meta
             return; // Salir del bucle
         }
 
-        // Método para reconstruir el camino desde la posición inicial hasta el nodo meta
+        // MÃ©todo para reconstruir el camino desde la posiciÃ³n inicial hasta el nodo meta
         void retracePath(CellInfo startNode, CellInfo endNode)
         {
             path.Clear();
             CellInfo currentNode = endNode; // Comenzar desde el nodo meta
 
-            // Bucle para retroceder desde el nodo meta hasta la posición inicial
+            // Bucle para retroceder desde el nodo meta hasta la posiciÃ³n inicial
             while (currentNode != startNode)
             {
-                path.Push(currentNode); // Añadir el nodo actual a la pila 'newPath'
+                path.Push(currentNode); // AÃ±adir el nodo actual a la pila 'newPath'
                 currentNode = visited[currentNode]; // Obtener el predecesor del nodo actual en el camino
             }
         }
 
-        // Método para calcular la distancia entre dos celdas en el tablero (distancia de Manhattan)
+        // MÃ©todo para calcular la distancia entre dos celdas en el tablero (distancia de Manhattan)
         float getDistanceToEndPoint(CellInfo A, CellInfo B)
         {
             float distRows = Mathf.Abs(A.RowId - B.RowId);
