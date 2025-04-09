@@ -1,6 +1,4 @@
-﻿// Carol Álvarez
-// Ignacio Tapia
-// Alicia Touris
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
