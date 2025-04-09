@@ -1,7 +1,3 @@
-//Carol Álvarez
-//Jose Antonio Reyes
-//Ignacio Tapia
-//Alicia Touris
 
 using Assets.Scripts.DataStructures;
 using System.Collections.Generic;
@@ -19,22 +15,22 @@ namespace Assets.Scripts.SampleMind
 
         bool pathSearched = false;//Variable para saber si se ha buscado el camino a seguir
 
-        //Método para obtener el movimiento
+        //MÃ©todo para obtener el movimiento
         public override Locomotion.MoveDirection GetNextMove(BoardInfo boardInfo, CellInfo currentPos, CellInfo[] goals)
         {
-            if (!pathSearched)//Si aún no se ha buscado el camino a seguir
+            if (!pathSearched)//Si aÃºn no se ha buscado el camino a seguir
             {
-                UnityEngine.Debug.Log($"LONGITUD DEL PATH: {getDistanceToEndPoint(currentPos, goals[0])}");//Llamamos a la función que nos da la distandia de Manhattan
+                UnityEngine.Debug.Log($"LONGITUD DEL PATH: {getDistanceToEndPoint(currentPos, goals[0])}");//Llamamos a la funciÃ³n que nos da la distandia de Manhattan
 
-                Stopwatch sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecución más adelante
+                Stopwatch sw = Stopwatch.StartNew();// Reiniciamos el temporizador para saber el tiempo de ejecuciÃ³n mÃ¡s adelante
 
-                searchPathUniformCost(boardInfo, currentPos, goals[0]);//Llamar a la función que establese el recorrido a seguir
+                searchPathUniformCost(boardInfo, currentPos, goals[0]);//Llamar a la funciÃ³n que establese el recorrido a seguir
                 UnityEngine.Debug.Log($"TIME ELAPSED: {sw.Elapsed}");// Imprimir el tiempo transcurrido
-                UnityEngine.Debug.Log($"NUMERO DE NODOS: {path.Count}");// Imprimir el número de nodos dentro del path a seguir
+                UnityEngine.Debug.Log($"NUMERO DE NODOS: {path.Count}");// Imprimir el nÃºmero de nodos dentro del path a seguir
 
-                pathSearched = true;// Establecer que la búsqueda del camino ha sido realizada
+                pathSearched = true;// Establecer que la bÃºsqueda del camino ha sido realizada
             }
-            if (path.Count > 0)// Extraer el siguiente movimiento de la pila 'path' y devolverlo como dirección de movimiento
+            if (path.Count > 0)// Extraer el siguiente movimiento de la pila 'path' y devolverlo como direcciÃ³n de movimiento
             {
                 CellInfo move = path.Pop();
 
@@ -51,22 +47,22 @@ namespace Assets.Scripts.SampleMind
             return Locomotion.MoveDirection.None;// Si no hay movimientos disponibles, no se devuelve movimiento
         }
 
-        // Método para realizar la búsqueda del camino utilizando el algoritmo BFS
+        // MÃ©todo para realizar la bÃºsqueda del camino utilizando el algoritmo BFS
         void searchPathUniformCost(BoardInfo boardInfo, CellInfo startPos, CellInfo targetPos)
         {
-            openList.Clear(); // Limpiar la cola "abierta" para reempezar la búsqueda
+            openList.Clear(); // Limpiar la cola "abierta" para reempezar la bÃºsqueda
             visited.Clear(); // Limpiar el diccionario de predecesores
             openList.Add(startPos); // Se inicializa la cola "abierta" desde el nodo de inicio
             listaCoste.Add(0);
 
-            // Bucle principal del algoritmo UniformCost si la lista de abiertos no está vacía
+            // Bucle principal del algoritmo UniformCost si la lista de abiertos no estÃ¡ vacÃ­a
             while (openList.Count > 0)
             {
                 CellInfo current = openList[0]; // Obtener y quitar el primer nodo de la cola 'openList' para marcarlo como el nodo actual
 
                 if (current == targetPos) // Si se ha encontrado el nodo meta
                 {
-                    retracePath(startPos, targetPos); // Llamar a la función que reconstruye el camino desde la posición inicial hasta el nodo meta
+                    retracePath(startPos, targetPos); // Llamar a la funciÃ³n que reconstruye el camino desde la posiciÃ³n inicial hasta el nodo meta
                     return; // Salir del bucle
                 }
 
@@ -99,20 +95,20 @@ namespace Assets.Scripts.SampleMind
             }
         }
 
-        // Método para reconstruir el camino desde la posición inicial hasta el nodo meta
+        // MÃ©todo para reconstruir el camino desde la posiciÃ³n inicial hasta el nodo meta
         void retracePath(CellInfo startNode, CellInfo endNode)
         {
             CellInfo currentNode = endNode; // Comenzar desde el nodo meta
 
-            // Bucle para retroceder desde el nodo meta hasta la posición inicial
+            // Bucle para retroceder desde el nodo meta hasta la posiciÃ³n inicial
             while (currentNode != startNode)
             {
-                path.Push(currentNode); // Añadir el nodo actual a la pila 'newPath'
+                path.Push(currentNode); // AÃ±adir el nodo actual a la pila 'newPath'
                 currentNode = visited[currentNode]; // Obtener el predecesor del nodo actual en el camino
             }
         }
 
-        // Método para calcular la distancia entre dos celdas en el tablero (distancia de Manhattan)
+        // MÃ©todo para calcular la distancia entre dos celdas en el tablero (distancia de Manhattan)
         float getDistanceToEndPoint(CellInfo A, CellInfo B)
         {
             float distRows = Mathf.Abs(A.RowId - B.RowId);
